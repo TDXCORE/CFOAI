@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "WebSearch",
+      "Bash(git clone:*)",
+      "Bash(pnpm install:*)",
+      "Bash(cd:*)",
+      "Bash(pnpm supabase:start:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

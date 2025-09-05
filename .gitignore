@@ -1,12 +1,18 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-node_modules
+node_modules/
 .pnp
 .pnp.js
+.yarn/install-state.gz
 
 # testing
-coverage
+coverage/
+*.lcov
+.nyc_output
+test-results/
+playwright-report/
+playwright/.cache/
 
 # next.js
 .next/
@@ -14,20 +20,37 @@ out/
 next-env.d.ts
 
 # production
-build
+build/
+dist/
 
 # misc
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
 *.pem
+*.key
+*.crt
+*.p12
 
 # debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+lerna-debug.log*
+logs
+*.log
 
 # local env files
+.env
 .env*.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # vercel
 .vercel
@@ -42,6 +65,55 @@ yarn-error.log*
 .idea/
 .vscode/
 .zed
+*.swp
+*.swo
+*~
 
 # contentlayer
 .contentlayer/
+
+# Supabase
+.branches
+.temp
+supabase/functions/_import_map.json
+
+# Database
+*.sqlite
+*.sqlite3
+*.db
+
+# Uploads and temp files
+uploads/
+temp-uploads/
+tmp/
+temp/
+
+# Cache directories
+.cache/
+.parcel-cache/
+.eslintcache
+.stylelintcache
+
+# Optional directories
+jspm_packages/
+bower_components/
+web_modules/
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Package manager lockfiles (keep pnpm-lock.yaml)
+package-lock.json
+yarn.lock
+
+# Backup files
+*.bak
+*.backup
+*.orig
+
+# OS generated files
+Thumbs.db
+.DS_Store

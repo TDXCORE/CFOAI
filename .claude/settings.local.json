@@ -6,7 +6,11 @@
       "Bash(git clone:*)",
       "Bash(pnpm install:*)",
       "Bash(cd:*)",
-      "Bash(pnpm supabase:start:*)"
+      "Bash(pnpm supabase:start:*)",
+      "Bash(git init:*)",
+      "Bash(git remote remove:*)",
+      "Bash(git remote add:*)",
+      "Bash(git add:*)"
     ],
     "deny": [],
     "ask": []

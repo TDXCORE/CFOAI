@@ -1,182 +1,165 @@
-![Makerkit - Next.js Supabase SaaS Starter Kit \[Lite version\]](apps/web/public/images/makerkit.webp)
+# CFO AI - Automated Invoice Processing for Colombian SMEs
 
-# NEW! Next.js Supabase SaaS Starter Kit (Lite)
+![CFO AI](https://your-domain.com/logo.png)
 
-Start building your SaaS faster with our Next.js 15 + Supabase starter kit.
+## 🚀 Overview
 
-👉 **Looking for a full-featured SaaS Starter Kit?** [Check out the complete version](https://makerkit.dev)
-
-⭐️ **Why Developers Trust Makerkit:**
-- Production-grade architecture decisions
-- Comprehensive TypeScript setup
-- Modern stack: Next.js 15, Supabase, TailwindCSS v4
-- Quality Code tooling: ESLint v9, Prettier, strict TypeScript, etc.
-- Regular updates and active maintenance
-
-PS: the documentation for this kit is still being updated, so please check back later for more details.
-
-## What's Included
-
-### Core Architecture
-- 🏗️ Next.js 15 + Turborepo monorepo setup
-- 🎨 Shadcn UI components with TailwindCSS v4
-- 🔐 Supabase authentication & basic DB
-- 🌐 i18n translations (client + server)
-- ✨ Full TypeScript + ESLint v9 + Prettier configuration
+CFO AI is a comprehensive SaaS platform that automates invoice processing for Colombian Small and Medium Enterprises (SMEs). The platform leverages AI-powered document classification, automatic Colombian tax calculations, and seamless integration with popular accounting systems like Siigo, World Office, and SAP.
 
 ### Key Features
-- 👤 User authentication flow
-- ⚙️ User profile & settings
-- 📱 Responsive marketing pages
-- 🔒 Protected routes
-- 🎯 Basic test setup with Playwright
 
-### Technologies
+- 📧 **Automated Email Processing**: Connect Outlook to automatically process invoice attachments
+- 🤖 **AI-Powered Classification**: OpenAI GPT-4 powered document analysis and categorization
+- 🇨🇴 **Colombian Tax Compliance**: Complete tax calculations for IVA, ReteFuente, ReteIVA, and ICA
+- 👥 **Multi-tenant Architecture**: Secure tenant isolation with role-based access control
+- 📊 **Comprehensive Dashboard**: Real-time processing metrics and business insights
+- 🔄 **Export Integration**: Direct export to Siigo, World Office, and SAP formats
+- ✅ **Review & Approval**: Human-in-the-loop workflow for quality assurance
 
-This starter kit provides core foundations:
+## 🏗️ Architecture
 
-🛠️ **Technology Stack**:
-- [Next.js 15](https://nextjs.org/): A React-based framework for server-side rendering and static site generation.
-- [Tailwind CSS](https://tailwindcss.com/): A utility-first CSS framework for rapidly building custom designs.
-- [Supabase](https://supabase.com/): A realtime database for web and mobile applications.
-- [i18next](https://www.i18next.com/): A popular internationalization framework for JavaScript.
-- [Turborepo](https://turborepo.org/): A monorepo tool for managing multiple packages and applications.
-- [Shadcn UI](https://shadcn.com/): A collection of components built using Tailwind CSS.
-- [Zod](https://github.com/colinhacks/zod): A TypeScript-first schema validation library.
-- [React Query](https://tanstack.com/query/v4): A powerful data fetching and caching library for React.
-- [Prettier](https://prettier.io/): An opinionated code formatter for JavaScript, TypeScript, and CSS.
-- [Eslint](https://eslint.org/): A powerful linting tool for JavaScript and TypeScript.
-- [Playwright](https://playwright.dev/): A framework for end-to-end testing of web applications.
+### Tech Stack
 
-This kit is a trimmed down version of the [full version of this SaaS Starter Kit](https://makerkit.dev). It is a good way to evaluate small part of the full kit, or to simply use it as a base for your own project.
+- **Frontend**: Next.js 15+ with App Router, TypeScript, Tailwind CSS, shadcn/ui
+- **Backend**: Next.js API Routes, Supabase PostgreSQL, Row Level Security (RLS)
+- **AI/ML**: OpenAI GPT-4 for classification, OpenAI Vision for OCR
+- **Integrations**: Microsoft Graph API, Supabase Storage, Vercel Analytics
+- **Testing**: Jest, Playwright, React Testing Library
+- **Deployment**: Vercel, GitHub Actions CI/CD
 
-## Comparing Lite vs Full Version
+### Project Structure
 
-The lite kit is perfect for:
-- Evaluating our code architecture and patterns
-- Building basic SaaS prototypes
-- Learning our tech stack approach
-- Building a basic SaaS tool
+```
+CFOAI/
+├── apps/
+│   └── web/                    # Next.js application
+│       ├── app/               # App router pages
+│       ├── components/        # React components
+│       ├── lib/              # Business logic and utilities
+│       │   ├── parsers/      # XML/PDF parsing
+│       │   ├── tax/          # Colombian tax calculations
+│       │   ├── exports/      # Export templates
+│       │   └── microsoft/    # Graph API integration
+│       └── __tests__/        # Test files
+├── claude/
+│   └── init/                 # Context engineering documentation
+├── supabase/
+│   ├── migrations/          # Database migrations
+│   └── seed/               # Sample data
+└── docs/                   # Additional documentation
+```
 
-The [full version](https://makerkit.dev) adds production features:
-- 💳 Complete billing and subscription system
-- 👥 Team accounts and management
-- 📧 Mailers and Email Templates (Nodemailer, Resend, etc.)
-- 📊 Analytics (GA, Posthog, Umami, etc.)
-- 🔦 Monitoring providers (Sentry, Baselime, etc.)
-- 🔐 Production database schema
-- ✅ Comprehensive test suite
-- 🔔 Realtime Notifications
-- 📝 Blogging system
-- 💡 Documentation system
-- ‍💻 Super Admin panel
-- 🕒 Daily updates and improvements
-- 🐛 Priority bug fixes
-- 🤝 Support
-- ⭐️ Used by 1000+ developers
-- 💪 Active community members
-- 🏢 Powers startups to enterprises
+## 🌍 Colombian Tax Compliance
 
-[View complete feature comparison →](https://makerkit.dev/#pricing)
+CFO AI is specifically designed for Colombian tax regulations:
+
+### Supported Tax Types
+
+- **IVA (VAT)**: 19% standard, 5% reduced, 0% zero-rated, exempt categories
+- **ReteFuente**: 4% services, 11% professional fees, 2.5% rent
+- **ReteIVA**: 15% of IVA amount for retention agents
+- **ICA**: Municipal tax rates for Bogotá, Medellín, Cali, and other cities
+
+### Document Formats
+
+- **UBL DIAN**: Colombian electronic invoice standard (XML)
+- **PDF OCR**: Scanned invoice processing with OpenAI Vision
+- **Export Formats**: Siigo CSV, World Office JSON, SAP XML
+
+## 📊 Features Deep Dive
+
+### 1. Document Processing Pipeline
+
+```mermaid
+graph LR
+    A[Email/Upload] --> B[File Validation]
+    B --> C[XML/PDF Parsing]
+    C --> D[AI Classification]
+    D --> E[Tax Calculation]
+    E --> F[Human Review]
+    F --> G[Export/Archive]
+```
+
+### 2. Multi-tenant Security
+
+- Row Level Security (RLS) policies
+- JWT-based authentication with Supabase Auth
+- Role-based permissions (Admin, Accountant, Viewer)
+- Audit logging for all operations
+
+### 3. Colombian Tax Engine
+
+Comprehensive tax calculation engine supporting:
+
+- Large taxpayer identification
+- City-specific ICA rates
+- Activity-based tax categories
+- Threshold validation
+- Historical rate support
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js 18.x or later (preferably the latest LTS version)
-- Docker
-- PNPM
-
-Please make sure you have a Docker daemon running on your machine. This is required for the Supabase CLI to work.
+- Node.js 18+
+- pnpm 8+
+- Supabase project
+- OpenAI API key
+- Microsoft Azure App Registration (for Outlook)
 
 ### Installation
 
-#### 1. Clone this repository
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/TDXCORE/CFOAI.git
+   cd CFOAI
+   ```
+
+2. **Install dependencies**
+   ```bash
+   pnpm install
+   ```
+
+3. **Environment setup**
+   ```bash
+   cp .env.example .env.local
+   # Fill in your environment variables
+   ```
+
+4. **Database setup**
+   ```bash
+   # Initialize Supabase (if using local development)
+   supabase start
+   supabase db reset
+   ```
+
+5. **Start development server**
+   ```bash
+   pnpm dev
+   ```
+
+Visit `http://localhost:3000` to see the application.
+
+## 🧪 Testing
+
+### Running Tests
 
 ```bash
-git clone https://github.com/makerkit/next-supabase-saas-kit-lite.git
+# Unit tests
+pnpm test
+
+# E2E tests
+pnpm test:e2e
+
+# Coverage report
+pnpm test:coverage
 ```
 
-#### 2. Install dependencies
+### Test Coverage
 
-```bash
-pnpm install
-```
-
-#### 3. Start Supabase
-
-Please make sure you have a Docker daemon running on your machine.
-
-Then run the following command to start Supabase:
-
-```bash
-pnpm run supabase:web:start
-```
-
-Once the Supabase server is running, please access the Supabase Dashboard using the port in the output of the previous command. Normally, you find it at [http://localhost:54323](http://localhost:54323).
-
-You will also find all the Supabase services printed in the terminal after the command is executed.
-
-##### Stopping Supabase
-
-To stop the Supabase server, run the following command:
-
-```bash
-pnpm run supabase:web:stop
-```
-
-##### Resetting Supabase
-
-To reset the Supabase server, run the following command:
-
-```bash
-pnpm run supabase:web:reset
-```
-
-##### More Supabase Commands
-
-For more Supabase commands, see the [Supabase CLI documentation](https://supabase.com/docs/guides/cli).
-
-```
-# Create new migration
-pnpm --filter web supabase migration new <name>
-
-# Link to Supabase project
-pnpm --filter web supabase link
-
-# Push migrations
-pnpm --filter web supabase db push
-```
-
-#### 4. Start the Next.js application
-
-```bash
-pnpm run dev
-```
-
-The application will be available at http://localhost:3000.
-
-#### 5. Code Health (linting, formatting, etc.)
-
-To format your code, run the following command:
-
-```bash
-pnpm run format:fix
-```
-
-To lint your code, run the following command:
-
-```bash
-pnpm run lint
-```
-
-To validate your TypeScript code, run the following command:
-
-```bash
-pnpm run typecheck
-```
-
-Turborepo will cache the results of these commands, so you can run them as many times as you want without any performance impact.
+- **Unit Tests**: >80% coverage target
+- **Integration Tests**: API endpoints and database operations
+- **E2E Tests**: Critical user workflows with Playwright
 
 ## Project Structure
 
@@ -328,16 +311,100 @@ export const runtime = 'edge';
 
 Remember to enable Node.js compatibility in the Cloudflare dashboard.
 
-## Contributing
+## 🚀 Deployment
 
-Contributions for bug fixed are welcome! However, please open an issue first to discuss your ideas before making a pull request.
+### Vercel Deployment
 
-## License
+1. **Fork and connect to Vercel**
+   - Connect your GitHub repository to Vercel
+   - Configure environment variables in Vercel dashboard
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+2. **Environment Variables**
+   - Copy values from `.env.example`
+   - Set production URLs and keys
+   - Configure Microsoft App Registration for production
 
-## Support
+3. **Database Migration**
+   ```bash
+   supabase db push --db-url your-production-db-url
+   ```
 
-No support is provided for this kit. Feel free to open an issue if you have any questions or need help, but there is no guaranteed response time, nor guarantee a fix.
+### GitHub Actions
 
-For dedicated support, priority fixes, and advanced features, [check out our full version](https://makerkit.dev).
+The repository includes CI/CD pipeline with:
+
+- Automated testing and linting
+- Security audit scanning  
+- Vercel deployment on main branch
+- Database migrations
+- Optional E2E test runs
+
+## 📖 Documentation
+
+- [Database Schema](./claude/init/database_schema.sql)
+- [Deployment Guide](./DEPLOYMENT.md)
+- [Work Plan](./claude/init/work_plan.md)
+- [Colombian Tax Rules](./docs/colombian-tax-guide.md)
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guide](./CONTRIBUTING.md) for details.
+
+### Development Workflow
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
+
+## 🆘 Support
+
+- 📧 Email: support@cfoai.co
+- 📚 Documentation: [docs.cfoai.co](https://docs.cfoai.co)
+- 🐛 Issues: [GitHub Issues](https://github.com/TDXCORE/CFOAI/issues)
+
+## 🎯 Success Metrics
+
+### Technical KPIs
+- 99.5% uptime SLA
+- <10 minute average processing time
+- <2 second API response time (95th percentile)
+- 95%+ document processing accuracy
+
+### Business KPIs
+- Process 1,800+ invoices/month per tenant
+- 40%+ reduction in manual processing time
+- 90%+ user satisfaction score
+- <5% error rate requiring manual correction
+
+## 🗺️ Roadmap
+
+### Phase 1: MVP (Completed ✅)
+- Multi-tenant authentication
+- Document processing pipeline
+- Colombian tax calculations
+- Microsoft Outlook integration
+- Export functionality
+
+### Phase 2: Enhanced Features (Q2 2024)
+- CFO AI chat interface
+- Advanced analytics dashboard
+- Mobile application
+- WhatsApp integration
+- Multi-country support
+
+### Phase 3: Enterprise (Q3-Q4 2024)
+- Advanced workflow automation
+- Custom integrations API
+- White-label solutions
+- Advanced security features
+- Compliance certifications
+
+---
+
+Made with ❤️ for Colombian SMEs by the CFO AI Team

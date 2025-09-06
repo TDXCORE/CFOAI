@@ -1,9 +1,9 @@
 'use client';
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card';
-import { Badge } from '~/components/ui/badge';
-import { Button } from '~/components/ui/button';
-import { Separator } from '~/components/ui/separator';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@kit/ui/card';
+import { Badge } from '@kit/ui/badge';
+import { Button } from '@kit/ui/button';
+import { Separator } from '@kit/ui/separator';
 import { 
   Calculator,
   AlertTriangle,
@@ -12,7 +12,7 @@ import {
   Edit,
   FileText
 } from 'lucide-react';
-import { cn } from '~/lib/utils';
+import { cn } from '@kit/ui/utils';
 
 interface TaxCalculation {
   id: string;

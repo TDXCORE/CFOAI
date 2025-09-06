@@ -20,7 +20,6 @@ import {
   Clock
 } from 'lucide-react';
 import { cn } from '@kit/ui/utils';
-import { withI18n } from '~/lib/i18n/with-i18n';
 
 interface UploadedFile {
   id: string;
@@ -367,4 +366,4 @@ function UploadPage() {
   );
 }
 
-export default withI18n(UploadPage);
+export default UploadPage;

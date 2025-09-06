@@ -17,19 +17,22 @@ export function getSupabaseServerClient<GenericSchema = Database>() {
   return createServerClient<GenericSchema>(keys.url, keys.anonKey, {
     cookies: {
       async getAll() {
-        const cookieStore = await cookies();
-
-        return cookieStore.getAll();
+        try {
+          const cookieStore = await cookies();
+          return cookieStore.getAll();
+        } catch {
+          // During build time or when called outside request context
+          return [];
+        }
       },
       async setAll(cookiesToSet) {
-        const cookieStore = await cookies();
-
         try {
+          const cookieStore = await cookies();
           cookiesToSet.forEach(({ name, value, options }) =>
             cookieStore.set(name, value, options),
           );
         } catch {
-          // The `setAll` method was called from a Server Component.
+          // The `setAll` method was called from a Server Component or during build.
           // This can be ignored if you have middleware refreshing
           // user sessions.
         }

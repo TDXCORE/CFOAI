@@ -9,34 +9,35 @@ const AppConfigSchema = z
         description: `This is the name of your SaaS. Ex. "Makerkit"`,
         required_error: `Please provide the variable NEXT_PUBLIC_PRODUCT_NAME`,
       })
-      .min(1),
+      .min(1)
+      .default('CFO AI'),
     title: z
       .string({
         description: `This is the default title tag of your SaaS.`,
         required_error: `Please provide the variable NEXT_PUBLIC_SITE_TITLE`,
       })
-      .min(1),
+      .min(1)
+      .default('CFO AI - Colombian Tax Management Platform'),
     description: z.string({
       description: `This is the default description of your SaaS.`,
       required_error: `Please provide the variable NEXT_PUBLIC_SITE_DESCRIPTION`,
-    }),
+    }).default('AI-powered Colombian tax compliance and invoice processing platform for SMEs'),
     url: z
-      .string({
-        required_error: `Please provide the variable NEXT_PUBLIC_SITE_URL`,
-      })
+      .string()
       .url({
         message: `You are deploying a production build but have entered a NEXT_PUBLIC_SITE_URL variable using http instead of https. It is very likely that you have set the incorrect URL. The build will now fail to prevent you from from deploying a faulty configuration. Please provide the variable NEXT_PUBLIC_SITE_URL with a valid URL, such as: 'https://example.com'`,
-      }),
+      })
+      .default(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://cfoai.vercel.app'),
     locale: z
       .string({
         description: `This is the default locale of your SaaS.`,
         required_error: `Please provide the variable NEXT_PUBLIC_DEFAULT_LOCALE`,
       })
-      .default('en'),
-    theme: z.enum(['light', 'dark', 'system']),
+      .default('es'),
+    theme: z.enum(['light', 'dark', 'system']).default('system'),
     production: z.boolean(),
-    themeColor: z.string(),
-    themeColorDark: z.string(),
+    themeColor: z.string().default('#0070f3'),
+    themeColorDark: z.string().default('#1a1a1a'),
   })
   .refine(
     (schema) => {

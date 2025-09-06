@@ -1,7 +1,5 @@
 import { getServerSideSitemap } from 'next-sitemap';
 
-import appConfig from '~/config/app.config';
-
 /**
  * @description The maximum age of the sitemap in seconds.
  * This is used to set the cache-control header for the sitemap. The cache-control header is used to control how long the sitemap is cached.
@@ -31,9 +29,14 @@ function getPaths() {
     // add more paths here
   ];
 
+  // Use environment variable or fallback for build time
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_URL 
+    ? `https://${process.env.VERCEL_URL}` 
+    : 'https://cfoai.vercel.app';
+
   return paths.map((path) => {
     return {
-      loc: new URL(path, appConfig.url).href,
+      loc: new URL(path, baseUrl).href,
       lastmod: new Date().toISOString(),
     };
   });

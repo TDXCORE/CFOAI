@@ -2,22 +2,85 @@ import type { NextRequest } from 'next/server';
 import { NextResponse, URLPattern } from 'next/server';
 
 import { CsrfError, createCsrfProtect } from '@edge-csrf/nextjs';
-
-import { checkRequiresMultiFactorAuthentication } from '@kit/supabase/check-requires-mfa';
-import { createMiddlewareClient } from '@kit/supabase/middleware-client';
-
-import appConfig from '~/config/app.config';
-import pathsConfig from '~/config/paths.config';
+import { createServerClient } from '@supabase/ssr';
 
 const CSRF_SECRET_COOKIE = 'csrfSecret';
 const NEXT_ACTION_HEADER = 'next-action';
+
+// Edge-compatible constants (inlined to avoid imports)
+const PATHS = {
+  auth: {
+    signIn: '/auth/sign-in',
+    signUp: '/auth/sign-up', 
+    verifyMfa: '/auth/verify',
+  },
+  app: {
+    home: '/dashboard',
+  },
+};
+
+const IS_PRODUCTION = process.env.NODE_ENV === 'production';
+
+// Edge-compatible functions
+function getSupabaseKeys() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  
+  if (!url || !anonKey) {
+    throw new Error('Missing Supabase environment variables');
+  }
+  
+  return { url, anonKey };
+}
+
+function createEdgeMiddlewareClient(request: NextRequest, response: NextResponse) {
+  const keys = getSupabaseKeys();
+  
+  return createServerClient(keys.url, keys.anonKey, {
+    cookies: {
+      getAll() {
+        return request.cookies.getAll();
+      },
+      setAll(cookiesToSet) {
+        cookiesToSet.forEach(({ name, value }) =>
+          request.cookies.set(name, value),
+        );
+
+        cookiesToSet.forEach(({ name, value, options }) =>
+          response.cookies.set(name, value, options),
+        );
+      },
+    },
+  });
+}
+
+async function checkRequiresMFA(client: any) {
+  try {
+    // @ts-expect-error: suppressGetSessionWarning is not part of the public API
+    client.auth.suppressGetSessionWarning = true;
+
+    const assuranceLevel = await client.auth.mfa.getAuthenticatorAssuranceLevel();
+
+    // @ts-expect-error: suppressGetSessionWarning is not part of the public API
+    client.auth.suppressGetSessionWarning = false;
+
+    if (assuranceLevel.error) {
+      return false; // Fail gracefully in edge runtime
+    }
+
+    const { nextLevel, currentLevel } = assuranceLevel.data;
+    return nextLevel === 'aal2' && nextLevel !== currentLevel;
+  } catch {
+    return false; // Fail gracefully in edge runtime
+  }
+}
 
 export const config = {
   matcher: ['/((?!_next/static|_next/image|images|locales|assets|api/*).*)'],
 };
 
 const getUser = (request: NextRequest, response: NextResponse) => {
-  const supabase = createMiddlewareClient(request, response);
+  const supabase = createEdgeMiddlewareClient(request, response);
 
   return supabase.auth.getUser();
 };
@@ -63,7 +126,7 @@ async function withCsrfMiddleware(
   // set up CSRF protection
   const csrfProtect = createCsrfProtect({
     cookie: {
-      secure: appConfig.production,
+      secure: IS_PRODUCTION,
       name: CSRF_SECRET_COOKIE,
     },
     // ignore CSRF errors for server actions since protection is built-in
@@ -112,13 +175,13 @@ function getPatterns() {
         }
 
         // check if we need to verify MFA (user is authenticated but needs to verify MFA)
-        const isVerifyMfa = req.nextUrl.pathname === pathsConfig.auth.verifyMfa;
+        const isVerifyMfa = req.nextUrl.pathname === PATHS.auth.verifyMfa;
 
         // If user is logged in and does not need to verify MFA,
         // redirect to home page.
         if (!isVerifyMfa) {
           return NextResponse.redirect(
-            new URL(pathsConfig.app.home, req.nextUrl.origin).href,
+            new URL(PATHS.app.home, req.nextUrl.origin).href,
           );
         }
       },
@@ -135,21 +198,20 @@ function getPatterns() {
 
         // If user is not logged in, redirect to sign in page.
         if (!user) {
-          const signIn = pathsConfig.auth.signIn;
+          const signIn = PATHS.auth.signIn;
           const redirectPath = `${signIn}?next=${next}`;
 
           return NextResponse.redirect(new URL(redirectPath, origin).href);
         }
 
-        const supabase = createMiddlewareClient(req, res);
+        const supabase = createEdgeMiddlewareClient(req, res);
 
-        const requiresMultiFactorAuthentication =
-          await checkRequiresMultiFactorAuthentication(supabase);
+        const requiresMultiFactorAuthentication = await checkRequiresMFA(supabase);
 
         // If user requires multi-factor authentication, redirect to MFA page.
         if (requiresMultiFactorAuthentication) {
           return NextResponse.redirect(
-            new URL(pathsConfig.auth.verifyMfa, origin).href,
+            new URL(PATHS.auth.verifyMfa, origin).href,
           );
         }
       },

@@ -65,6 +65,7 @@ After running the migration, verify these components exist:
 #### **RLS Policies** (Row Level Security):
 - Go to **Authentication** → **Policies**
 - Should see policies for each table (e.g., `tenant_access`, `invoice_tenant_access`)
+- Should see storage policies (`invoices_policy`, `exports_policy`)
 
 #### **Functions**:
 - Go to **SQL Editor** → **Functions**
@@ -119,6 +120,8 @@ OPENAI_API_KEY=sk-your-openai-key
 
 ### **"syntax error at or near NOT"**
 - ✅ **Fixed**: Updated migration to use `DROP POLICY IF EXISTS` + `CREATE POLICY`
+- ✅ **Fixed**: Corrected both table policies AND storage policies
+- ✅ **Fixed**: Lines 536 and 678 syntax errors resolved
 - The corrected migration should run without syntax errors
 
 ### **"relation does not exist"**

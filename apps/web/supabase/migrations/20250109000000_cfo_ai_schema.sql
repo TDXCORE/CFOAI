@@ -675,7 +675,10 @@ VALUES
 ON CONFLICT (id) DO NOTHING;
 
 -- RLS policies for storage
-CREATE POLICY IF NOT EXISTS "invoices_policy" ON storage.objects
+DROP POLICY IF EXISTS "invoices_policy" ON storage.objects;
+DROP POLICY IF EXISTS "exports_policy" ON storage.objects;
+
+CREATE POLICY "invoices_policy" ON storage.objects
 FOR ALL USING (
   bucket_id = 'invoices' AND
   (storage.foldername(name))[1] IN (
@@ -683,7 +686,7 @@ FOR ALL USING (
   )
 );
 
-CREATE POLICY IF NOT EXISTS "exports_policy" ON storage.objects
+CREATE POLICY "exports_policy" ON storage.objects
 FOR ALL USING (
   bucket_id = 'exports' AND
   (storage.foldername(name))[1] IN (

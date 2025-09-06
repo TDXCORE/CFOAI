@@ -39,10 +39,6 @@
       "source": "/api/(.*)",
       "headers": [
         {
-          "key": "Access-Control-Allow-Origin",
-          "value": "https://your-domain.com"
-        },
-        {
           "key": "Access-Control-Allow-Methods",
           "value": "GET, POST, PUT, DELETE, OPTIONS"
         },
@@ -65,23 +61,5 @@
       "source": "/api/webhooks/(.*)",
       "destination": "/api/webhooks/$1"
     }
-  ],
-  "env": {
-    "NEXT_PUBLIC_SUPABASE_URL": "@next_public_supabase_url",
-    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@next_public_supabase_anon_key",
-    "SUPABASE_SERVICE_ROLE_KEY": "@supabase_service_role_key",
-    "OPENAI_API_KEY": "@openai_api_key",
-    "MICROSOFT_CLIENT_ID": "@microsoft_client_id",
-    "MICROSOFT_CLIENT_SECRET": "@microsoft_client_secret",
-    "MICROSOFT_REDIRECT_URI": "@microsoft_redirect_uri",
-    "OUTLOOK_WEBHOOK_URL": "@outlook_webhook_url",
-    "NEXTAUTH_SECRET": "@nextauth_secret",
-    "NEXTAUTH_URL": "@nextauth_url"
-  },
-  "build": {
-    "env": {
-      "NEXT_PUBLIC_SUPABASE_URL": "@next_public_supabase_url",
-      "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@next_public_supabase_anon_key"
-    }
-  }
+  ]
 }

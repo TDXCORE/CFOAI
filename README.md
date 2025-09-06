@@ -342,9 +342,10 @@ The repository includes CI/CD pipeline with:
 ## 📖 Documentation
 
 - [Database Schema](./claude/init/database_schema.sql)
-- [Deployment Guide](./DEPLOYMENT.md)
+- [Production Deployment Guide](./DEPLOYMENT.md)
+- [**Vercel Quick Deploy Guide**](./VERCEL_DEPLOYMENT.md) ⚡
 - [Work Plan](./claude/init/work_plan.md)
-- [Colombian Tax Rules](./docs/colombian-tax-guide.md)
+- [Environment Variables](/.env.example)
 
 ## 🤝 Contributing
 

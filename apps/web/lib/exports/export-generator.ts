@@ -6,7 +6,7 @@ import {
   EXPORT_TEMPLATES,
   DEFAULT_ACCOUNT_MAPPINGS
 } from './export-templates';
-import { createClient } from '~/lib/supabase/server';
+import { getSupabaseServerClient } from '@kit/supabase/clients/server-client';
 
 export interface ExportRequest {
   templateId: string;
@@ -36,7 +36,7 @@ export interface ExportResult {
 }
 
 export class ExportGenerator {
-  private supabase = createClient();
+  private supabase = getSupabaseServerClient();
 
   /**
    * Generate export file

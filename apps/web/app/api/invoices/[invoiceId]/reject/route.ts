@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '~/lib/supabase/server';
+import { getSupabaseServerClient } from '@kit/supabase/clients/server-client';
 import { requireAuthContext, logAuditEvent } from '~/lib/auth/server';
 
 interface RejectInvoiceParams {
@@ -14,7 +14,7 @@ export async function POST(
 ) {
   try {
     const { user, tenant } = await requireAuthContext();
-    const supabase = createClient();
+    const supabase = getSupabaseServerClient();
     const body = await request.json();
     
     const { reason, notes, requiresManualReview = true } = body;

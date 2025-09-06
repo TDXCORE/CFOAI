@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '~/lib/supabase/server';
+import { getSupabaseServerClient } from '@kit/supabase/clients/server-client';
 import { requireAuthContext } from '~/lib/auth/server';
 import { documentProcessor } from '~/lib/processors/document-processor';
 
@@ -15,7 +15,7 @@ export async function POST(
 ) {
   try {
     const { user, tenant } = await requireAuthContext();
-    const supabase = createClient();
+    const supabase = getSupabaseServerClient();
     
     // Verify job exists and belongs to tenant
     const { data: job, error } = await supabase

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '~/lib/supabase/server';
+import { getSupabaseServerClient } from '@kit/supabase/clients/server-client';
 import { MicrosoftGraphClient } from '~/lib/microsoft/graph-client';
 
 interface WebhookNotification {
@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
 }
 
 async function processEmailNotification(notification: WebhookNotification) {
-  const supabase = createClient();
+  const supabase = getSupabaseServerClient();
   
   try {
     // Find the integration associated with this subscription
@@ -152,7 +152,7 @@ async function processEmailAttachments(
   storedMessageId: string,
   tenantId: string
 ) {
-  const supabase = createClient();
+  const supabase = getSupabaseServerClient();
   
   try {
     const attachments = await graphClient.getMessageAttachments(messageId);
@@ -250,7 +250,7 @@ async function processEmailAttachments(
 }
 
 async function refreshIntegrationToken(integrationId: string) {
-  const supabase = createClient();
+  const supabase = getSupabaseServerClient();
   
   try {
     const { data: integration } = await supabase

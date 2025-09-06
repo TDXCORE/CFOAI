@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '~/lib/supabase/server';
+import { getSupabaseServerClient } from '@kit/supabase/clients/server-client';
 import { requireAuthContext } from '~/lib/auth/server';
 import { generateAuthUrl, exchangeCodeForToken } from '~/lib/microsoft/graph-client';
 import { redirect } from 'next/navigation';
@@ -52,7 +52,7 @@ async function handleOAuthCallback(
   userId: string, 
   tenantId: string
 ) {
-  const supabase = createClient();
+  const supabase = getSupabaseServerClient();
   
   try {
     // Validate state token

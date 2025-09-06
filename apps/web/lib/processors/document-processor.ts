@@ -1,5 +1,5 @@
 // CFO AI Document Processing Engine
-import { createClient } from '~/lib/supabase/server';
+import { getSupabaseServerClient } from '@kit/supabase/clients/server-client';
 import { ublParser, type ParsedInvoice } from '~/lib/parsers/xml-parser';
 import { classifyInvoice, extractFromImage, type ClassificationResult, type OCRResult } from '~/lib/openai/client';
 import { logAuditEvent } from '~/lib/auth/server';
@@ -33,7 +33,7 @@ export type ProcessingStage =
   | 'failed';
 
 export class DocumentProcessor {
-  private supabase = createClient();
+  private supabase = getSupabaseServerClient();
 
   async processDocument(context: ProcessingContext): Promise<ProcessingResult> {
     try {

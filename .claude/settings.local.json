@@ -12,7 +12,10 @@
       "Bash(git remote add:*)",
       "Bash(git add:*)",
       "Bash(git push:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(pnpm --filter web build)",
+      "Bash(npx next:*)",
+      "Bash(find:*)"
     ],
     "deny": [],
     "ask": []

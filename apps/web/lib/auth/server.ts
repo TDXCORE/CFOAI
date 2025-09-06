@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation';
 import type { Database } from '../supabase/database.types';
 import type { UserProfile, Tenant, UserTenant } from '../types/database';
 
-export function createClient() {
+export function getSupabaseServerClient() {
   const cookieStore = cookies();
 
   return createServerClient<Database>(
@@ -43,7 +43,7 @@ export interface AuthContext {
 }
 
 export async function getUser() {
-  const supabase = createClient();
+  const supabase = getSupabaseServerClient();
   
   try {
     const { data: { user }, error } = await supabase.auth.getUser();
@@ -80,7 +80,7 @@ export async function requireUser() {
 }
 
 export async function getUserTenants(userId: string) {
-  const supabase = createClient();
+  const supabase = getSupabaseServerClient();
   
   const { data: userTenants, error } = await supabase
     .from('user_tenants')
@@ -123,7 +123,7 @@ export async function getDefaultTenant(userId: string) {
 }
 
 export async function getTenantFromSlug(slug: string) {
-  const supabase = createClient();
+  const supabase = getSupabaseServerClient();
   
   const { data: tenant, error } = await supabase
     .from('tenants')
@@ -140,7 +140,7 @@ export async function getTenantFromSlug(slug: string) {
 }
 
 export async function validateUserTenantAccess(userId: string, tenantId: string) {
-  const supabase = createClient();
+  const supabase = getSupabaseServerClient();
   
   const { data: userTenant, error } = await supabase
     .from('user_tenants')
@@ -251,7 +251,7 @@ export async function logAuditEvent(
     requestId?: string;
   }
 ) {
-  const supabase = createClient();
+  const supabase = getSupabaseServerClient();
   
   const changes: string[] = [];
   
@@ -280,7 +280,7 @@ export async function logAuditEvent(
 
 // Helper to create user profile after signup
 export async function createUserProfile(userId: string, email: string, fullName?: string) {
-  const supabase = createClient();
+  const supabase = getSupabaseServerClient();
   
   const { data, error } = await supabase
     .from('user_profiles')
@@ -311,7 +311,7 @@ export async function createTenantWithUser(
     plan?: 'free' | 'starter' | 'professional' | 'enterprise';
   }
 ) {
-  const supabase = createClient();
+  const supabase = getSupabaseServerClient();
   
   // Start a transaction by creating the tenant first
   const { data: tenant, error: tenantError } = await supabase

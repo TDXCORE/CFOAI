@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '~/lib/supabase/server';
+import { getSupabaseServerClient } from '@kit/supabase/clients/server-client';
 import { requireAuthContext } from '~/lib/auth/server';
 
 interface JobParams {
@@ -14,7 +14,7 @@ export async function GET(
 ) {
   try {
     const { tenant } = await requireAuthContext();
-    const supabase = createClient();
+    const supabase = getSupabaseServerClient();
     
     const { data: job, error } = await supabase
       .from('processing_jobs')
@@ -73,7 +73,7 @@ export async function DELETE(
 ) {
   try {
     const { tenant } = await requireAuthContext();
-    const supabase = createClient();
+    const supabase = getSupabaseServerClient();
     
     // Check if job can be deleted (only queued or failed jobs)
     const { data: job, error: getError } = await supabase
@@ -126,7 +126,7 @@ export async function PATCH(
 ) {
   try {
     const { user, tenant } = await requireAuthContext();
-    const supabase = createClient();
+    const supabase = getSupabaseServerClient();
     const body = await request.json();
     
     const { action } = body;

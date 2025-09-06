@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '~/lib/supabase/server';
+import { getSupabaseServerClient } from '@kit/supabase/clients/server-client';
 import { requireAuthContext } from '~/lib/auth/server';
 import { FileUploadSchema } from '~/lib/validations';
 import crypto from 'crypto';
@@ -7,7 +7,7 @@ import crypto from 'crypto';
 export async function POST(request: NextRequest) {
   try {
     const { user, tenant } = await requireAuthContext();
-    const supabase = createClient();
+    const supabase = getSupabaseServerClient();
 
     // Parse form data
     const formData = await request.formData();

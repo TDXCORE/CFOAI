@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '~/lib/supabase/server';
+import { getSupabaseServerClient } from '@kit/supabase/clients/server-client';
 import { requireAuthContext } from '~/lib/auth/server';
 import { FileFilterSchema } from '~/lib/validations';
 
 export async function GET(request: NextRequest) {
   try {
     const { tenant } = await requireAuthContext();
-    const supabase = createClient();
+    const supabase = getSupabaseServerClient();
     
     const { searchParams } = new URL(request.url);
     const params = Object.fromEntries(searchParams.entries());
@@ -89,7 +89,7 @@ export async function GET(request: NextRequest) {
 export async function DELETE(request: NextRequest) {
   try {
     const { tenant } = await requireAuthContext();
-    const supabase = createClient();
+    const supabase = getSupabaseServerClient();
     
     const { searchParams } = new URL(request.url);
     const fileId = searchParams.get('id');

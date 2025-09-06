@@ -1,7 +1,7 @@
 // Microsoft Graph API Integration for CFO AI
 import { Client } from '@microsoft/microsoft-graph-client';
 import { AuthenticationProvider } from '@microsoft/microsoft-graph-client';
-import { createClient } from '~/lib/supabase/server';
+import { getSupabaseServerClient } from '@kit/supabase/clients/server-client';
 
 // Custom authentication provider for Microsoft Graph
 class GraphAuthProvider implements AuthenticationProvider {
@@ -55,7 +55,7 @@ export interface OutlookMessage {
 
 export class MicrosoftGraphClient {
   private client: Client;
-  private supabase = createClient();
+  private supabase = getSupabaseServerClient();
 
   constructor(accessToken: string) {
     const authProvider = new GraphAuthProvider(accessToken);

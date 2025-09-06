@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '~/lib/supabase/server';
+import { getSupabaseServerClient } from '@kit/supabase/clients/server-client';
 import { requireAuthContext } from '~/lib/auth/server';
 
 interface DownloadParams {
@@ -14,7 +14,7 @@ export async function GET(
 ) {
   try {
     const { tenant } = await requireAuthContext();
-    const supabase = createClient();
+    const supabase = getSupabaseServerClient();
     
     // Get export record
     const { data: exportRecord, error: exportError } = await supabase

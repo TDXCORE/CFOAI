@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '~/lib/supabase/server';
+import { getSupabaseServerClient } from '@kit/supabase/clients/server-client';
 import { requireAuthContext, logAuditEvent } from '~/lib/auth/server';
 import { exportGenerator, ExportRequest } from '~/lib/exports/export-generator';
 import { z } from 'zod';
@@ -28,7 +28,7 @@ const CreateExportSchema = z.object({
 export async function POST(request: NextRequest) {
   try {
     const { user, tenant } = await requireAuthContext();
-    const supabase = createClient();
+    const supabase = getSupabaseServerClient();
     const body = await request.json();
     
     // Validate request
@@ -111,7 +111,7 @@ export async function POST(request: NextRequest) {
 export async function GET(request: NextRequest) {
   try {
     const { tenant } = await requireAuthContext();
-    const supabase = createClient();
+    const supabase = getSupabaseServerClient();
     
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get('page') || '1');

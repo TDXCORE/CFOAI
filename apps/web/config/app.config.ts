@@ -27,7 +27,10 @@ const AppConfigSchema = z
       .url({
         message: `You are deploying a production build but have entered a NEXT_PUBLIC_SITE_URL variable using http instead of https. It is very likely that you have set the incorrect URL. The build will now fail to prevent you from from deploying a faulty configuration. Please provide the variable NEXT_PUBLIC_SITE_URL with a valid URL, such as: 'https://example.com'`,
       })
-      .default(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://cfoai.vercel.app'),
+      .default(
+        process.env.NEXT_PUBLIC_SITE_URL || 
+        (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://cfoai.vercel.app')
+      ),
     locale: z
       .string({
         description: `This is the default locale of your SaaS.`,
@@ -43,11 +46,13 @@ const AppConfigSchema = z
     (schema) => {
       const isCI = process.env.NEXT_PUBLIC_CI;
 
-      if (isCI ?? !schema.production) {
+      // Always pass validation in CI or non-production environments
+      if (isCI || !schema.production) {
         return true;
       }
 
-      return !schema.url.startsWith('http:');
+      // In production, ensure URL starts with https
+      return schema.url.startsWith('https:');
     },
     {
       message: `Please provide a valid HTTPS URL. Set the variable NEXT_PUBLIC_SITE_URL with a valid URL, such as: 'https://example.com'`,

@@ -24,13 +24,25 @@ const AppConfigSchema = z
     }).default('AI-powered Colombian tax compliance and invoice processing platform for SMEs'),
     url: z
       .string()
-      .url({
-        message: `You are deploying a production build but have entered a NEXT_PUBLIC_SITE_URL variable using http instead of https. It is very likely that you have set the incorrect URL. The build will now fail to prevent you from from deploying a faulty configuration. Please provide the variable NEXT_PUBLIC_SITE_URL with a valid URL, such as: 'https://example.com'`,
-      })
       .default(
         process.env.NEXT_PUBLIC_SITE_URL || 
         (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://cfoai.vercel.app')
-      ),
+      )
+      .refine((url) => {
+        // Skip URL validation during build time
+        if (process.env.NODE_ENV !== 'production' || process.env.NEXT_PHASE === 'phase-production-build') {
+          return true;
+        }
+        // Only validate URL format in runtime
+        try {
+          new URL(url);
+          return true;
+        } catch {
+          return false;
+        }
+      }, {
+        message: `Please provide a valid HTTPS URL. Set the variable NEXT_PUBLIC_SITE_URL with a valid URL, such as: 'https://example.com'`,
+      }),
     locale: z
       .string({
         description: `This is the default locale of your SaaS.`,
@@ -45,13 +57,14 @@ const AppConfigSchema = z
   .refine(
     (schema) => {
       const isCI = process.env.NEXT_PUBLIC_CI;
+      const isBuildTime = process.env.NEXT_PHASE === 'phase-production-build';
 
-      // Always pass validation in CI or non-production environments
-      if (isCI || !schema.production) {
+      // Always pass validation in CI, non-production, or build time
+      if (isCI || !schema.production || isBuildTime) {
         return true;
       }
 
-      // In production, ensure URL starts with https
+      // In production runtime, ensure URL starts with https
       return schema.url.startsWith('https:');
     },
     {

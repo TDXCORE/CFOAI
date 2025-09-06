@@ -9,8 +9,15 @@ import appConfig from '~/config/app.config';
  * @description Generates the root metadata for the application
  */
 export const generateRootMetadata = async (): Promise<Metadata> => {
-  const headersStore = await headers();
-  const csrfToken = headersStore.get('x-csrf-token') ?? '';
+  let csrfToken = '';
+  
+  try {
+    const headersStore = await headers();
+    csrfToken = headersStore.get('x-csrf-token') ?? '';
+  } catch {
+    // During build time or when called outside request context
+    csrfToken = '';
+  }
 
   return {
     title: appConfig.title,

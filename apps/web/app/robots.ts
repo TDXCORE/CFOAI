@@ -1,13 +1,15 @@
 import { MetadataRoute } from 'next';
 
-import appConfig from '~/config/app.config';
-
 export default function robots(): MetadataRoute.Robots {
+  // Use environment variable or fallback for build time
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://cfoai.vercel.app');
+
   return {
     rules: {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: `${appConfig.url}/sitemap.xml`,
+    sitemap: `${baseUrl}/sitemap.xml`,
   };
 }

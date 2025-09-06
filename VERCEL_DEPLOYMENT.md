@@ -15,7 +15,7 @@ Vercel should automatically detect Next.js, but verify these settings:
 
 - **Framework Preset**: Next.js
 - **Root Directory**: `./` (leave empty)
-- **Build Command**: `pnpm install && pnpm build --filter web`
+- **Build Command**: `pnpm install && pnpm --filter web build`
 - **Output Directory**: `apps/web/.next`
 - **Install Command**: `echo 'Using custom build command for install'`
 
@@ -162,8 +162,12 @@ After deployment, verify these features work:
 - This correctly handles the monorepo structure
 
 **"Cannot install with frozen-lockfile because pnpm-lock.yaml is not up to date"**
-- Fixed: Using custom build command that runs `pnpm install && pnpm build --filter web`
+- Fixed: Using custom build command that runs `pnpm install && pnpm --filter web build`
 - This allows lockfile to be updated during deployment
+
+**"error: unknown option '--filter'"**
+- Fixed: Corrected pnpm workspace filter syntax to `pnpm --filter web build`
+- Filter flag must come before the command, not after
 
 **"canvas install failed" / "node-pre-gyp ERR!"**
 - Fixed: Removed `react-pdf` dependency that requires canvas

@@ -20,6 +20,8 @@ const PATHS = {
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
+// Force deployment trigger - latest version with robust error handling
+
 // Edge-compatible functions
 function hasAuthCookies(request: NextRequest) {
   try {

@@ -532,49 +532,65 @@ GRANT EXECUTE ON FUNCTION cfo_ai.user_tenant_ids() TO authenticated, service_rol
 
 -- RLS Policies for main tables
 
+-- Drop existing policies if they exist, then create new ones
+DROP POLICY IF EXISTS tenant_access ON tenants;
+DROP POLICY IF EXISTS invoice_tenant_access ON invoices;
+DROP POLICY IF EXISTS mailboxes_tenant_access ON mailboxes;
+DROP POLICY IF EXISTS mail_messages_tenant_access ON mail_messages;
+DROP POLICY IF EXISTS files_tenant_access ON files;
+DROP POLICY IF EXISTS processing_jobs_tenant_access ON processing_jobs;
+DROP POLICY IF EXISTS user_tenants_access ON user_tenants;
+DROP POLICY IF EXISTS invoice_items_tenant_access ON invoice_items;
+DROP POLICY IF EXISTS classifications_tenant_access ON classifications;
+DROP POLICY IF EXISTS tax_calculations_tenant_access ON tax_calculations;
+DROP POLICY IF EXISTS accounts_mapping_tenant_access ON accounts_mapping;
+DROP POLICY IF EXISTS accounting_entries_tenant_access ON accounting_entries;
+DROP POLICY IF EXISTS exports_tenant_access ON exports;
+DROP POLICY IF EXISTS audit_logs_tenant_access ON audit_logs;
+
 -- Tenants: Users can only see tenants they belong to
-CREATE POLICY IF NOT EXISTS tenant_access ON tenants
+CREATE POLICY tenant_access ON tenants
   FOR ALL USING (id = ANY(cfo_ai.user_tenant_ids()));
 
 -- Invoices: Scoped by tenant
-CREATE POLICY IF NOT EXISTS invoice_tenant_access ON invoices
+CREATE POLICY invoice_tenant_access ON invoices
   FOR ALL USING (tenant_id = ANY(cfo_ai.user_tenant_ids()));
 
 -- All other tenant-scoped tables follow similar pattern
-CREATE POLICY IF NOT EXISTS mailboxes_tenant_access ON mailboxes
+CREATE POLICY mailboxes_tenant_access ON mailboxes
   FOR ALL USING (tenant_id = ANY(cfo_ai.user_tenant_ids()));
 
-CREATE POLICY IF NOT EXISTS mail_messages_tenant_access ON mail_messages
+CREATE POLICY mail_messages_tenant_access ON mail_messages
   FOR ALL USING (tenant_id = ANY(cfo_ai.user_tenant_ids()));
 
-CREATE POLICY IF NOT EXISTS files_tenant_access ON files
+CREATE POLICY files_tenant_access ON files
   FOR ALL USING (tenant_id = ANY(cfo_ai.user_tenant_ids()));
 
-CREATE POLICY IF NOT EXISTS processing_jobs_tenant_access ON processing_jobs
+CREATE POLICY processing_jobs_tenant_access ON processing_jobs
   FOR ALL USING (tenant_id = ANY(cfo_ai.user_tenant_ids()));
 
-CREATE POLICY IF NOT EXISTS user_tenants_access ON user_tenants
+CREATE POLICY user_tenants_access ON user_tenants
   FOR ALL USING (user_id = auth.uid() OR tenant_id = ANY(cfo_ai.user_tenant_ids()));
 
-CREATE POLICY IF NOT EXISTS invoice_items_tenant_access ON invoice_items
+CREATE POLICY invoice_items_tenant_access ON invoice_items
   FOR ALL USING (invoice_id IN (SELECT id FROM invoices WHERE tenant_id = ANY(cfo_ai.user_tenant_ids())));
 
-CREATE POLICY IF NOT EXISTS classifications_tenant_access ON classifications
+CREATE POLICY classifications_tenant_access ON classifications
   FOR ALL USING (invoice_id IN (SELECT id FROM invoices WHERE tenant_id = ANY(cfo_ai.user_tenant_ids())));
 
-CREATE POLICY IF NOT EXISTS tax_calculations_tenant_access ON tax_calculations
+CREATE POLICY tax_calculations_tenant_access ON tax_calculations
   FOR ALL USING (invoice_id IN (SELECT id FROM invoices WHERE tenant_id = ANY(cfo_ai.user_tenant_ids())));
 
-CREATE POLICY IF NOT EXISTS accounts_mapping_tenant_access ON accounts_mapping
+CREATE POLICY accounts_mapping_tenant_access ON accounts_mapping
   FOR ALL USING (tenant_id = ANY(cfo_ai.user_tenant_ids()));
 
-CREATE POLICY IF NOT EXISTS accounting_entries_tenant_access ON accounting_entries
+CREATE POLICY accounting_entries_tenant_access ON accounting_entries
   FOR ALL USING (tenant_id = ANY(cfo_ai.user_tenant_ids()));
 
-CREATE POLICY IF NOT EXISTS exports_tenant_access ON exports
+CREATE POLICY exports_tenant_access ON exports
   FOR ALL USING (tenant_id = ANY(cfo_ai.user_tenant_ids()));
 
-CREATE POLICY IF NOT EXISTS audit_logs_tenant_access ON audit_logs
+CREATE POLICY audit_logs_tenant_access ON audit_logs
   FOR ALL USING (tenant_id = ANY(cfo_ai.user_tenant_ids()));
 
 -- =============================================

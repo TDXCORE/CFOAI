@@ -342,8 +342,9 @@ The repository includes CI/CD pipeline with:
 ## 📖 Documentation
 
 - [Database Schema](./claude/init/database_schema.sql)
-- [Production Deployment Guide](./DEPLOYMENT.md)
+- [**Supabase Setup Guide**](./SUPABASE_SETUP.md) 🗄️
 - [**Vercel Quick Deploy Guide**](./VERCEL_DEPLOYMENT.md) ⚡
+- [Production Deployment Guide](./DEPLOYMENT.md)
 - [Work Plan](./claude/init/work_plan.md)
 - [Environment Variables](/.env.example)
 

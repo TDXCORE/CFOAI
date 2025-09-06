@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Badge } from '~/components/ui/badge';
-import { Button } from '~/components/ui/button';
-import { Progress } from '~/components/ui/progress';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card';
+import { Badge } from '@kit/ui/badge';
+import { Button } from '@kit/ui/button';
+import { Progress } from '@kit/ui/progress';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@kit/ui/card';
 import { 
   CheckCircle,
   XCircle,
@@ -16,7 +16,7 @@ import {
   RefreshCw,
   X
 } from 'lucide-react';
-import { cn } from '~/lib/utils';
+import { cn } from '@kit/ui/utils';
 
 interface ProcessingJob {
   id: string;

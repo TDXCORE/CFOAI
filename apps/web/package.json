@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "analyze": "ANALYZE=true pnpm run build",
-    "build": "pnpm with-env next build",
+    "build": "next build",
     "build:test": "NODE_ENV=test pnpm with-env:test next build",
     "clean": "git clean -xdf .next .turbo node_modules",
     "dev": "pnpm with-env next dev --turbo | pino-pretty -c",
@@ -65,7 +65,6 @@
     "jszip": "^3.10.1",
     "react-dropzone": "^14.3.6",
     "sharp": "^0.34.3",
-    "react-pdf": "^7.7.3",
     "papaparse": "^5.4.1",
     "node-cron": "^3.0.3"
   },

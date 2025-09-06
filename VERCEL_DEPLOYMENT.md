@@ -15,7 +15,7 @@ Vercel should automatically detect Next.js, but verify these settings:
 
 - **Framework Preset**: Next.js
 - **Root Directory**: `./` (leave empty)
-- **Build Command**: `cd apps/web && pnpm run build`
+- **Build Command**: `pnpm build --filter web`
 - **Output Directory**: `apps/web/.next`
 - **Install Command**: `pnpm install --frozen-lockfile`
 
@@ -156,6 +156,14 @@ After deployment, verify these features work:
 ## 🆘 Troubleshooting
 
 ### Common Error Messages:
+
+**"sh: line 1: cd: apps/web: No such file or directory"**
+- Fixed: Updated build command to use `pnpm build --filter web`
+- This correctly handles the monorepo structure
+
+**"canvas install failed" / "node-pre-gyp ERR!"**
+- Fixed: Removed `react-pdf` dependency that requires canvas
+- Use alternative PDF viewing solutions if needed
 
 **"Module not found"**
 - Check if all dependencies are in `package.json`

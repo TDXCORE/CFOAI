@@ -6,7 +6,7 @@ import {
   EXPORT_TEMPLATES,
   DEFAULT_ACCOUNT_MAPPINGS
 } from './export-templates';
-import { getSupabaseServerClient } from '@kit/supabase/clients/server-client';
+import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 export interface ExportRequest {
   templateId: string;

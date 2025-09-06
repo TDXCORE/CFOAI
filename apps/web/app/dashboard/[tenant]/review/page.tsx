@@ -21,7 +21,6 @@ import {
   Calendar
 } from 'lucide-react';
 import { cn } from '@kit/ui/utils';
-import { withI18n } from '~/lib/i18n/with-i18n';
 
 interface ReviewInvoice {
   id: string;
@@ -493,4 +492,4 @@ function ReviewPage() {
   );
 }
 
-export default withI18n(ReviewPage);
+export default ReviewPage;

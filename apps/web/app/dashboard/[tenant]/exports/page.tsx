@@ -29,7 +29,6 @@ import {
 import { cn } from '@kit/ui/utils';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
-import { withI18n } from '~/lib/i18n/with-i18n';
 
 interface ExportTemplate {
   id: string;
@@ -495,4 +494,4 @@ function ExportsPage() {
   );
 }
 
-export default withI18n(ExportsPage);
+export default ExportsPage;

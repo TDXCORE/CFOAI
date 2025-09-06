@@ -1,5 +1,5 @@
 // CFO AI Document Processing Engine
-import { getSupabaseServerClient } from '@kit/supabase/clients/server-client';
+import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { ublParser, type ParsedInvoice } from '~/lib/parsers/xml-parser';
 import { classifyInvoice, extractFromImage, type ClassificationResult, type OCRResult } from '~/lib/openai/client';
 import { logAuditEvent } from '~/lib/auth/server';

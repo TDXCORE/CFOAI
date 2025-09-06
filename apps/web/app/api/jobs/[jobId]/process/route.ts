@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getSupabaseServerClient } from '@kit/supabase/clients/server-client';
+import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { requireAuthContext } from '~/lib/auth/server';
 import { documentProcessor } from '~/lib/processors/document-processor';
 

@@ -24,7 +24,6 @@ import {
   Clock
 } from 'lucide-react';
 import { cn } from '@kit/ui/utils';
-import { withI18n } from '~/lib/i18n/with-i18n';
 
 interface OutlookIntegration {
   id: string;
@@ -500,4 +499,4 @@ function OutlookIntegrationPage() {
   );
 }
 
-export default withI18n(OutlookIntegrationPage);
+export default OutlookIntegrationPage;

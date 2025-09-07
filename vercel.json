@@ -49,17 +49,6 @@
       ]
     }
   ],
-  "redirects": [
-    {
-      "source": "/dashboard",
-      "destination": "/auth/sign-in",
-      "permanent": false
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/api/webhooks/(.*)",
-      "destination": "/api/webhooks/$1"
-    }
-  ]
+  "redirects": [],
+  "rewrites": []
 }

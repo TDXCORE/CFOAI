@@ -1,51 +1,45 @@
 import { Footer } from '@kit/ui/marketing';
-import { Trans } from '@kit/ui/trans';
 
 import { AppLogo } from '~/components/app-logo';
-import appConfig from '~/config/app.config';
 
 export function SiteFooter() {
   return (
     <Footer
       logo={<AppLogo className="w-[85px] md:w-[95px]" />}
-      description={<Trans i18nKey="marketing:footerDescription" />}
+      description={<span>Plataforma de gestión fiscal colombiana con inteligencia artificial</span>}
       copyright={
-        <Trans
-          i18nKey="marketing:copyright"
-          values={{
-            product: appConfig.name,
-            year: new Date().getFullYear(),
-          }}
-        />
+        <span>
+          © {new Date().getFullYear()} CFO AI. Todos los derechos reservados.
+        </span>
       }
       sections={[
         {
-          heading: 'Get Started',
+          heading: 'Comenzar',
           links: [
             {
               href: '/auth/sign-in',
-              label: <Trans i18nKey="auth:signIn" />,
+              label: <span>Iniciar Sesión</span>,
             },
             {
               href: '/auth/sign-up',
-              label: <Trans i18nKey="auth:signUp" />,
+              label: <span>Registrarse</span>,
             },
           ],
         },
         {
-          heading: <Trans i18nKey="marketing:legal" />,
+          heading: <span>Legal</span>,
           links: [
             {
               href: '/terms-of-service',
-              label: <Trans i18nKey="marketing:termsOfService" />,
+              label: <span>Términos de Servicio</span>,
             },
             {
               href: '/privacy-policy',
-              label: <Trans i18nKey="marketing:privacyPolicy" />,
+              label: <span>Política de Privacidad</span>,
             },
             {
               href: '/cookie-policy',
-              label: <Trans i18nKey="marketing:cookiePolicy" />,
+              label: <span>Política de Cookies</span>,
             },
           ],
         },

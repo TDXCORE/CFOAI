@@ -14,8 +14,6 @@ import {
 } from '@kit/ui/marketing';
 import { Trans } from '@kit/ui/trans';
 
-import { withI18n } from '~/lib/i18n/with-i18n';
-
 function Home() {
   return (
     <div className={'mt-4 flex flex-col space-y-24 py-14'}>
@@ -23,19 +21,19 @@ function Home() {
         <Hero
           pill={
             <Pill label={'New'}>
-              <span>The leading SaaS Starter Kit for ambitious developers</span>
+              <span>CFO AI - Colombian Tax Management</span>
             </Pill>
           }
           title={
             <>
-              <span>The ultimate SaaS Starter</span>
-              <span>for your next project</span>
+              <span>CFO AI Platform</span>
+              <span>para Empresas Colombianas</span>
             </>
           }
           subtitle={
             <span>
-              Build and Ship a SaaS faster than ever before with the next-gen
-              SaaS Starter Kit. Ship your SaaS in days, not months.
+              Automatiza el procesamiento de facturas y gestión de impuestos colombianos 
+              con inteligencia artificial. Simplifica tu contabilidad empresarial.
             </span>
           }
           cta={<MainCallToActionButton />}
@@ -48,7 +46,7 @@ function Home() {
               width={3558}
               height={2222}
               src={`/images/dashboard.webp`}
-              alt={`App Image`}
+              alt={`CFO AI Dashboard`}
             />
           }
         />
@@ -62,47 +60,46 @@ function Home() {
             heading={
               <>
                 <b className="font-semibold dark:text-white">
-                  The ultimate SaaS Starter Kit
+                  Plataforma CFO AI
                 </b>
                 .{' '}
                 <span className="text-muted-foreground font-normal">
-                  Unleash your creativity and build your SaaS faster than ever
-                  with Makerkit.
+                  Automatiza tu gestión fiscal colombiana con IA avanzada.
                 </span>
               </>
             }
             icon={
               <FeatureShowcaseIconContainer>
                 <LayoutDashboard className="h-5" />
-                <span>All-in-one solution</span>
+                <span>Gestión Integral</span>
               </FeatureShowcaseIconContainer>
             }
           >
             <FeatureGrid>
               <FeatureCard
                 className={'relative col-span-2 overflow-hidden'}
-                label={'Beautiful Dashboard'}
-                description={`Makerkit provides a beautiful dashboard to manage your SaaS business.`}
+                label={'Procesamiento Automático'}
+                description={`Procesa facturas automáticamente desde Outlook con OCR e IA.`}
               />
 
               <FeatureCard
                 className={
                   'relative col-span-2 w-full overflow-hidden lg:col-span-1'
                 }
-                label={'Authentication'}
-                description={`Makerkit provides a variety of providers to allow your users to sign in.`}
+                label={'Cálculos Fiscales'}
+                description={`IVA, ReteFuente, ReteIVA y ICA calculados automáticamente.`}
               />
 
               <FeatureCard
                 className={'relative col-span-2 overflow-hidden lg:col-span-1'}
-                label={'Multi Tenancy'}
-                description={`Multi tenant memberships for your SaaS business.`}
+                label={'Integración Contable'}
+                description={`Conecta con Siigo, World Office y SAP.`}
               />
 
               <FeatureCard
                 className={'relative col-span-2 overflow-hidden'}
-                label={'Billing'}
-                description={`Makerkit supports multiple payment gateways to charge your customers.`}
+                label={'Cumplimiento DIAN'}
+                description={`Genera reportes UBL para cumplir con regulaciones colombianas.`}
               />
             </FeatureGrid>
           </FeatureShowcase>
@@ -112,7 +109,7 @@ function Home() {
   );
 }
 
-export default withI18n(Home);
+export default Home;
 
 function MainCallToActionButton() {
   return (
@@ -120,9 +117,7 @@ function MainCallToActionButton() {
       <CtaButton>
         <Link href={'/auth/sign-up'}>
           <span className={'flex items-center space-x-0.5'}>
-            <span>
-              <Trans i18nKey={'common:getStarted'} />
-            </span>
+            <span>Comenzar</span>
 
             <ArrowRightIcon
               className={
@@ -135,8 +130,8 @@ function MainCallToActionButton() {
       </CtaButton>
 
       <CtaButton variant={'link'}>
-        <Link href={'/contact'}>
-          <Trans i18nKey={'common:contactUs'} />
+        <Link href={'/auth/sign-in'}>
+          Iniciar Sesión
         </Link>
       </CtaButton>
     </div>
